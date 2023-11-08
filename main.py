@@ -76,7 +76,7 @@ try:
     # email, authentication_status, username = Authenticator.login('Login', 'main')
 
     
-    with st.form(key='login', clear_on_submit=True):
+    with st.form(key='login'):
         st.subheader('Login')
 
         username = st.text_input('Username', placeholder='Enter Your Username', help =
