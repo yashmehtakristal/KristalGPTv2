@@ -129,6 +129,10 @@ try:
                         with info:
                             st.error('Incorrect Password or username')
 
+                    else:
+                        with info:
+                            st.error('Please feed in your credentials properly')
+
                 else:
                     with info:
                         st.warning('Please enter the password field')
@@ -142,5 +146,4 @@ try:
                 st.warning('Please enter the username field')
 
 except:
-    st.warning("Some error popped up")
     st.success('Refresh Page')
