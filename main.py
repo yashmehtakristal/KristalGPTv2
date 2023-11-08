@@ -102,48 +102,50 @@ try:
             login_button = st.form_submit_button('Login')
 
 
-    # Checking if login button is pressed
-    if login_button:
-        
-        info, info1 = st.columns(2)
-        
-        if username:
-            if username in usernames:
-                if password:
+        # Checking if login button is pressed
+        if login_button:
+            
+            info, info1 = st.columns(2)
+            
+            if username:
+                if username in usernames:
+                    if password:
 
-                    st.session_state.username = username
-                    password_match = bcrypt.checkpw(password.encode(), credentials['usernames'][username]['password'].encode())
+                        st.session_state.username = username
+                        password_match = bcrypt.checkpw(password.encode(), credentials['usernames'][username]['password'].encode())
 
-                    if password_match is True:
-                        st.session_state.logged_in = True
-                        st.session_state.logout = False
+                        if password_match is True:
+                            st.session_state.logged_in = True
+                            st.session_state.logout = False
+                            # st.rerun()
 
-                        st.sidebar.subheader(f'Welcome {username}')
-                        logout_button = Authenticator.logout('Log Out', 'sidebar')
+                            st.sidebar.subheader(f'Welcome {username}')
+                            logout_button = Authenticator.logout('Log Out', 'sidebar')
 
-                        if logout_button:
-                            st.session_state.logged_out = True
-                            st.session_state.logged_in = False
+                            if logout_button:
+                                st.session_state.logged_out = True
+                                st.session_state.logged_in = False
 
-                    elif password_match is False:
-                        with info:
-                            st.error('Incorrect Password or username')
+                        elif password_match is False:
+                            with info:
+                                st.error('Incorrect Password or username')
+
+                        else:
+                            with info:
+                                st.error('Please feed in your credentials properly')
 
                     else:
                         with info:
-                            st.error('Please feed in your credentials properly')
+                            st.warning('Please enter the password field')
 
                 else:
                     with info:
-                        st.warning('Please enter the password field')
+                        st.warning('Username does not exist in database')
 
             else:
                 with info:
-                    st.warning('Username does not exist in database')
-
-        else:
-            with info:
-                st.warning('Please enter the username field')
+                    st.warning('Please enter the username field')
 
 except Exception as e:
-    st.warning(e)
+    st.error(f'An error occurred: {e}')
+    # st.success('Refresh Page')
