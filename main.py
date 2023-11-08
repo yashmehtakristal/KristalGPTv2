@@ -32,10 +32,10 @@ show_pages(
 
 # Session state variables
 if "logged_out" not in st.session_state:
-    st.session_state.logged_out = False
+    st.session_state['logged_out'] = False
 
 if "logged_in" not in st.session_state:
-    st.session_state.logged_in = False
+    st.session_state['logged_in'] = False
 
 if not st.session_state.logged_in:
     hide_pages(["About", "Bulk Upload - Basic", "Bulk Upload - Advanced", "Q&A - Basic", "Q&A - Advanced"])
@@ -44,13 +44,13 @@ if st.session_state.logged_out:
     hide_pages(["About", "Bulk Upload - Basic", "Bulk Upload - Advanced", "Q&A - Basic", "Q&A - Advanced"])
 
 if "username" not in st.session_state:
-    st.session_state.username = ''
+    st.session_state['username'] = ''
 
 if "Authenticator" not in st.session_state:
-    st.session_state.Authenticator = None
+    st.session_state['Authenticator'] = None
 
 if "logout" not in st.session_state:
-    st.session_state.logout = False
+    st.session_state['logout'] = False
 
 
 try:
@@ -142,5 +142,5 @@ try:
                 st.warning('Please enter the username field')
 
 except:
+    st.warning("Some error popped up")
     st.success('Refresh Page')
-
