@@ -117,7 +117,7 @@ try:
                         if password_match is True:
                             st.session_state.logged_in = True
                             st.session_state.logout = False
-                            # st.rerun()
+                            st.rerun()
 
                             st.sidebar.subheader(f'Welcome {username}')
                             logout_button = Authenticator.logout('Log Out', 'sidebar')
