@@ -145,5 +145,5 @@ try:
             with info:
                 st.warning('Please enter the username field')
 
-except:
-    st.success('Refresh Page')
+except Exception as e:
+    st.warning(e)
