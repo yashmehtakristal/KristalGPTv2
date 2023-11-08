@@ -73,7 +73,9 @@ try:
     Authenticator = stauth.Authenticate(credentials, cookie_name = 'Streamlit', key = 'abcdef', cookie_expiry_days = 0)
     st.session_state.Authenticator = Authenticator
 
-    email, authentication_status, username = Authenticator.login('Login', 'main')
+    # email, authentication_status, username = Authenticator.login('Login', 'main')
+
+    
     with st.form(key='login', clear_on_submit=True):
         st.subheader('Login')
 
@@ -93,6 +95,15 @@ try:
                             2) Password can contain any characters (letters, digits, underscore, dashes, period etc)
                             '''
                             )
+        
+        btn1, bt2, btn3, btn4, btn5 = st.columns(5)
+
+        with btn1:
+            login_button = st.form_submit_button('Login')
+
+
+    # Checking if login button is pressed
+    if login_button:
         
         info, info1 = st.columns(2)
         
@@ -114,7 +125,6 @@ try:
                             st.session_state.logged_out = True
                             st.session_state.logged_in = False
 
-
                     elif password_match is False:
                         with info:
                             st.error('Incorrect Password or username')
@@ -130,12 +140,6 @@ try:
         else:
             with info:
                 st.warning('Please enter the username field')
-
-
-        btn1, bt2, btn3, btn4, btn5 = st.columns(5)
-
-        with btn1:
-            st.form_submit_button('Login')
 
 except:
     st.success('Refresh Page')
