@@ -72,6 +72,8 @@ def login_button_pressed(username, password):
                         st.session_state.logged_out = True
                         st.session_state.logged_in = False
 
+                    st.rerun()
+
                 elif password_match is False:
                     with info:
                         st.error('Incorrect Password or username')
