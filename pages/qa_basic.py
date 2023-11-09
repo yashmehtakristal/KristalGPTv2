@@ -39,13 +39,7 @@ def change_states():
 
 # Display app only if user is logged in
 if st.session_state.logged_in is True and st.session_state.logout is False:
-
-    st.sidebar.subheader(f'Welcome {st.session_state.username}')
-
-    #st.session_state.Authenticator.logout('Log Out', 'sidebar')
-    # logout_button = st.session_state.Authenticator.logout('Log Out', 'sidebar')
-    logout_button = st.sidebar.button("Logout", on_click = change_states)
-
+    
     # Check embeddings
     check_embeddings = st.radio(label = "Do you have saved embeddings?", options = ["Yes", "No"], index = None, help = "Embeddings are saved files created by ChromaDB", disabled=False, horizontal = False, label_visibility="visible")
 
@@ -109,6 +103,12 @@ if st.session_state.logged_in is True and st.session_state.logout is False:
                     "1) Please upload the excel files",
                     icon="⚠")
                 st.stop()
+
+    st.sidebar.subheader(f'Welcome {st.session_state.username}')
+
+    #st.session_state.Authenticator.logout('Log Out', 'sidebar')
+    # logout_button = st.session_state.Authenticator.logout('Log Out', 'sidebar')
+    logout_button = st.sidebar.button("Logout", on_click = change_states)
 
 else:
     st.info("Seems like you are not logged in. Please head over to the Login page to login", icon="ℹ️")
