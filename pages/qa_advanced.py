@@ -6,14 +6,6 @@ from st_pages import Page, Section, add_page_title, show_pages, hide_pages
 st.set_page_config(page_title="Kristal Retriever", page_icon="📖", layout="wide")
 st.header("📖 Kristal Retriever")
 
-# Hide particular pages if not logged in
-if not st.session_state.logged_in:
-    hide_pages(["Bulk Upload - Basic", "Bulk Upload - Advanced", "Q&A - Basic", "Q&A - Advanced"])
-
-# Hide particular pages if logged out
-if st.session_state.logged_out:
-    hide_pages(["Bulk Upload - Basic", "Bulk Upload - Advanced", "Q&A - Basic", "Q&A - Advanced"])
-
 add_logo("https://assets-global.website-files.com/614a9edd8139f5def3897a73/61960dbb839ce5fefe853138_Kristal%20Logotype%20Primary.svg")
 
 
@@ -40,6 +32,10 @@ if not openai_api_key:
         "Please check with creator of the program (OpenAI keys can be found at https://platform.openai.com/account/api-keys)"
     )
 
+def change_states():
+    st.session_state.logged_out = True
+    st.session_state.logged_in = False
+    st.session_state.password_match = None
 
 # Initializing session states
 if "load_prompt_result_selector_state" not in st.session_state:
@@ -72,12 +68,10 @@ if st.session_state.logged_in is True and st.session_state.logout is False:
 
     st.sidebar.subheader(f'Welcome {st.session_state.username}')
 
-    logout_button = st.session_state.Authenticator.logout('Log Out', 'sidebar')
+    #st.session_state.Authenticator.logout('Log Out', 'sidebar')
+    # logout_button = st.session_state.Authenticator.logout('Log Out', 'sidebar')
+    logout_button = st.sidebar.button("Logout", on_click = change_states)
 
-    if logout_button:
-        st.session_state.logged_out = True
-        st.session_state.logged_in = False
-        st.rerun()
 
     check_embeddings = st.radio(label = "Do you have saved embeddings?", options = ["Yes", "No"], index = None, help = "Embeddings are saved files created by ChromaDB", disabled=False, horizontal = False, label_visibility="visible")
     
