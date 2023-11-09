@@ -55,6 +55,9 @@ if "username" not in st.session_state:
 if "password" not in st.session_state:
     st.session_state['password'] = ""
 
+if "password_match" not in st.session_state:
+    st.session_state['password_match'] = ""    
+
 # Function defining what happens if login button is pressed
 def login_button_pressed():
     
@@ -67,24 +70,13 @@ def login_button_pressed():
                 # st.session_state.username = username
                 password_match = bcrypt.checkpw(st.session_state.password.encode(), credentials['usernames'][st.session_state.username]['password'].encode())
 
-                if password_match is True:
-                    st.session_state.logged_in = True
-                    st.session_state.logout = False
+                st.session_state.password_match = password_match
 
-                    st.sidebar.subheader(f'Welcome {st.session_state.username}')
-                    logout_button = Authenticator.logout('Log Out', 'sidebar')
-
-                    if logout_button:
-                        st.session_state.logged_out = True
-                        st.session_state.logged_in = False
-
-                    # st.rerun()
-
-                elif password_match is False:
+                if password_match is False:
                     with info:
                         st.error('Incorrect Password or username')
 
-                else:
+                if password_match is None:
                     with info:
                         st.error('Please feed in your credentials properly')
 
@@ -149,6 +141,17 @@ try:
 
         with btn1:
             login_button = st.form_submit_button('Login', on_click= login_button_pressed)
+
+    if st.session_state.password_match == True:
+        st.session_state.logged_in = True
+        st.session_state.logout = False
+
+        st.sidebar.subheader(f'Welcome {st.session_state.username}')
+        logout_button = Authenticator.logout('Log Out', 'sidebar')
+
+        if logout_button:
+            st.session_state.logged_out = True
+            st.session_state.logged_in = False
 
 
 except Exception as e:
