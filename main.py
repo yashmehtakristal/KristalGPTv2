@@ -44,7 +44,7 @@ if st.session_state.logged_out:
     hide_pages(["About", "Bulk Upload - Basic", "Bulk Upload - Advanced", "Q&A - Basic", "Q&A - Advanced"])
 
 if "username" not in st.session_state:
-    st.session_state['username'] = ''
+    st.session_state['username'] = None
 
 if "Authenticator" not in st.session_state:
     st.session_state['Authenticator'] = None
@@ -57,18 +57,18 @@ def login_button_pressed():
     
     info, info1 = st.columns(2)
     
-    if username:
-        if username in usernames:
+    if st.session_state['username']:
+        if st.session_state['username'] in usernames:
             if password:
 
                 st.session_state.username = username
-                password_match = bcrypt.checkpw(password.encode(), credentials['usernames'][username]['password'].encode())
+                password_match = bcrypt.checkpw(password.encode(), credentials['usernames'][st.session_state['username']]['password'].encode())
 
                 if password_match is True:
                     st.session_state.logged_in = True
                     st.session_state.logout = False
 
-                    st.sidebar.subheader(f'Welcome {username}')
+                    st.sidebar.subheader('Welcome', st.session_state['username'])
                     logout_button = Authenticator.logout('Log Out', 'sidebar')
 
                     if logout_button:
@@ -128,6 +128,8 @@ try:
                         2) Username contains only alphanumeric characters (letters and digits)
                         '''
                         )
+        
+        st.session_state['username'] = username
         
         password = st.text_input('Password', placeholder='Enter Your Password', type='password',
                             help =
