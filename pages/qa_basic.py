@@ -32,6 +32,8 @@ if not openai_api_key:
         "Please check with creator of the program (OpenAI keys can be found at https://platform.openai.com/account/api-keys)"
     )
 
+st.session_state.username = st.session_state.username
+
 def change_states():
     st.session_state.logged_out = True
     st.session_state.logged_in = False
