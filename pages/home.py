@@ -20,7 +20,7 @@ add_logo("https://assets-global.website-files.com/614a9edd8139f5def3897a73/61960
 def change_states():
     st.session_state.logged_out = True
     st.session_state.logged_in = False
-
+    st.session_state.password_match = None
 
 # let User see app if logged in = True & logged out = False
 if st.session_state.logged_in is True and st.session_state.logout is False:
