@@ -140,10 +140,8 @@ try:
                             '''
                             )
         
-        btn1, bt2, btn3, btn4, btn5 = st.columns(5)
-
-        with btn1:
-            login_button = st.form_submit_button('Login', on_click = login_button_pressed)
+        login_button = st.form_submit_button('Login', on_click = login_button_pressed)
+            
 
 
 except Exception as e:
