@@ -19,7 +19,7 @@ add_logo("https://assets-global.website-files.com/614a9edd8139f5def3897a73/61960
 
 
 # let User see app if logged in = True & logged out = False
-if st.session_state.logged_in is True and st.session_state.logout is False:
+if st.session_state.logged_in is True and st.session_state.logged_out is False:
 
     st.sidebar.subheader(f'Welcome {st.session_state.username}')
 
