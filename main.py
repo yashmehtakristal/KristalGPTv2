@@ -51,9 +51,6 @@ if "logout" not in st.session_state:
 
 # Function defining what happens if login button is pressed
 def login_button_pressed(username, password):
-
-    st.write(username)
-    st.write(password)
     
     info, info1 = st.columns(2)
     
@@ -74,6 +71,8 @@ def login_button_pressed(username, password):
                     if logout_button:
                         st.session_state.logged_out = True
                         st.session_state.logged_in = False
+
+                    st.rerun()
 
                 elif password_match is False:
                     with info:
@@ -141,7 +140,7 @@ try:
         btn1, bt2, btn3, btn4, btn5 = st.columns(5)
 
         with btn1:
-            login_button = st.form_submit_button('Login', on_click=lambda: login_button_pressed(username, password))
+            login_button = st.form_submit_button('Login', on_click= login_button_pressed, args = (username, password))
 
 
 except Exception as e:
