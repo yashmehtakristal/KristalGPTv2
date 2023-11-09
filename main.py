@@ -43,40 +43,42 @@ if not st.session_state.logged_in:
 if st.session_state.logged_out:
     hide_pages(["About", "Bulk Upload - Basic", "Bulk Upload - Advanced", "Q&A - Basic", "Q&A - Advanced"])
 
-if "username" not in st.session_state:
-    st.session_state['username'] = None
-
-if "password" not in st.session_state:
-    st.session_state['password'] = None
-
 if "Authenticator" not in st.session_state:
     st.session_state['Authenticator'] = None
 
 if "logout" not in st.session_state:
     st.session_state['logout'] = False
 
+if "username" not in st.session_state:
+    st.session_state['username'] = ""
+
+if "password" not in st.session_state:
+    st.session_state['password'] = ""
+
 # Function defining what happens if login button is pressed
 def login_button_pressed():
     
     info, info1 = st.columns(2)
     
-    if st.session_state['username']:
-        if st.session_state['username'] in usernames:
-            if password:
+    if st.session_state.username:
+        if st.session_state.username in usernames:
+            if st.session_state.password:
 
                 # st.session_state.username = username
-                password_match = bcrypt.checkpw(st.session_state['password'].encode(), credentials['usernames'][st.session_state['username']]['password'].encode())
+                password_match = bcrypt.checkpw(st.session_state.password.encode(), credentials['usernames'][st.session_state.username]['password'].encode())
 
                 if password_match is True:
                     st.session_state.logged_in = True
                     st.session_state.logout = False
 
-                    st.sidebar.subheader('Welcome', st.session_state['username'])
+                    st.sidebar.subheader(f'Welcome {st.session_state.username}')
                     logout_button = Authenticator.logout('Log Out', 'sidebar')
 
                     if logout_button:
                         st.session_state.logged_out = True
                         st.session_state.logged_in = False
+
+                    st.rerun()
 
                 elif password_match is False:
                     with info:
@@ -133,8 +135,6 @@ try:
                         key = "username"
                         )
         
-        st.session_state['username'] = username
-        
         password = st.text_input('Password', placeholder='Enter Your Password', type='password',
                             help =
                             '''
@@ -148,7 +148,7 @@ try:
         btn1, bt2, btn3, btn4, btn5 = st.columns(5)
 
         with btn1:
-            login_button = st.form_submit_button('Login', on_click = login_button_pressed)
+            login_button = st.form_submit_button('Login', on_click= login_button_pressed)
 
 
 except Exception as e:
