@@ -52,6 +52,48 @@ if "Authenticator" not in st.session_state:
 if "logout" not in st.session_state:
     st.session_state['logout'] = False
 
+    # Function defining what happens if login button is pressed
+    def login_button_pressed():
+        
+        info, info1 = st.columns(2)
+        
+        if username:
+            if username in usernames:
+                if password:
+
+                    st.session_state.username = username
+                    password_match = bcrypt.checkpw(password.encode(), credentials['usernames'][username]['password'].encode())
+
+                    if password_match is True:
+                        st.session_state.logged_in = True
+                        st.session_state.logout = False
+
+                        st.sidebar.subheader(f'Welcome {username}')
+                        logout_button = Authenticator.logout('Log Out', 'sidebar')
+
+                        if logout_button:
+                            st.session_state.logged_out = True
+                            st.session_state.logged_in = False
+
+                    elif password_match is False:
+                        with info:
+                            st.error('Incorrect Password or username')
+
+                    else:
+                        with info:
+                            st.error('Please feed in your credentials properly')
+
+                else:
+                    with info:
+                        st.warning('Please enter the password field')
+
+            else:
+                with info:
+                    st.warning('Username does not exist in database')
+
+        else:
+            with info:
+                st.warning('Please enter the username field')
 
 try:
     users = fetch_users()
@@ -99,51 +141,8 @@ try:
         btn1, bt2, btn3, btn4, btn5 = st.columns(5)
 
         with btn1:
-            login_button = st.form_submit_button('Login')
+            login_button = st.form_submit_button('Login', on_click = login_button_pressed)
 
-
-        # Checking if login button is pressed
-        if login_button:
-            
-            info, info1 = st.columns(2)
-            
-            if username:
-                if username in usernames:
-                    if password:
-
-                        st.session_state.username = username
-                        password_match = bcrypt.checkpw(password.encode(), credentials['usernames'][username]['password'].encode())
-
-                        if password_match is True:
-                            st.session_state.logged_in = True
-                            st.session_state.logout = False
-
-                            st.sidebar.subheader(f'Welcome {username}')
-                            logout_button = Authenticator.logout('Log Out', 'sidebar')
-
-                            if logout_button:
-                                st.session_state.logged_out = True
-                                st.session_state.logged_in = False
-
-                        elif password_match is False:
-                            with info:
-                                st.error('Incorrect Password or username')
-
-                        else:
-                            with info:
-                                st.error('Please feed in your credentials properly')
-
-                    else:
-                        with info:
-                            st.warning('Please enter the password field')
-
-                else:
-                    with info:
-                        st.warning('Username does not exist in database')
-
-            else:
-                with info:
-                    st.warning('Please enter the username field')
 
 except Exception as e:
     st.error(f'An error occurred: {e}')
