@@ -50,7 +50,7 @@ if "logout" not in st.session_state:
     st.session_state['logout'] = False
 
 # Function defining what happens if login button is pressed
-def login_button_pressed(username, password):
+def login_button_pressed():
     
     info, info1 = st.columns(2)
     
@@ -140,7 +140,8 @@ try:
         btn1, bt2, btn3, btn4, btn5 = st.columns(5)
 
         with btn1:
-            login_button = st.form_submit_button('Login', on_click= login_button_pressed, args = (username, password))
+            #login_button = st.form_submit_button('Login', on_click= login_button_pressed, args = (username, password))
+            login_button = st.form_submit_button('Login', on_click= login_button_pressed)
 
 
 except Exception as e:
