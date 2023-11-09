@@ -78,7 +78,7 @@ def login_button_pressed():
                         st.session_state.logged_out = True
                         st.session_state.logged_in = False
 
-                    st.rerun()
+                    # st.rerun()
 
                 elif password_match is False:
                     with info:
