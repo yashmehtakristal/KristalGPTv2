@@ -52,6 +52,14 @@ if "password" not in st.session_state:
 if "password_match" not in st.session_state:
     st.session_state['password_match'] = ""    
 
+def keep(key):
+    # Copy from temporary widget key to permanent key
+    st.session_state[key] = st.session_state['_'+key]
+
+def unkeep(key):
+    # Copy from permanent key to temporary widget key
+    st.session_state['_'+key] = st.session_state[key]
+
 
 def change_states():
     st.session_state.logged_out = True
@@ -117,13 +125,16 @@ try:
     with st.form(key='login'):
         st.subheader('Login')
 
+        unkeep("username")
         username = st.text_input('Username', placeholder='Enter Your Username', help =
                         '''
                         Please make sure:
                         1) Username is at least 2 characters long
                         2) Username contains only alphanumeric characters (letters and digits)
                         ''',
-                        key = "username"
+                        key = "_username",
+                        on_change = keep,
+                        args=["username"]
                         )
         
         password = st.text_input('Password', placeholder='Enter Your Password', type='password',
