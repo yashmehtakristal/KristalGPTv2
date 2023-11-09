@@ -58,6 +58,11 @@ if "password" not in st.session_state:
 if "password_match" not in st.session_state:
     st.session_state['password_match'] = ""    
 
+
+def change_states():
+    st.session_state.logged_out = True
+    st.session_state.logged_in = False
+
 # Function defining what happens if login button is pressed
 def login_button_pressed():
     
@@ -147,12 +152,7 @@ try:
         st.session_state.logout = False
 
         st.sidebar.subheader(f'Welcome {st.session_state.username}')
-        logout_button = Authenticator.logout('Log Out', 'sidebar')
-
-        if logout_button:
-            st.session_state.logged_out = True
-            st.session_state.logged_in = False
-
+        logout_button = st.sidebar.button("Logout", on_click = change_states)
 
 except Exception as e:
     st.error(f'An error occurred: {e}')
