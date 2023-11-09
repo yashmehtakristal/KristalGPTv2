@@ -8,14 +8,6 @@ from st_pages import Page, Section, add_page_title, show_pages, hide_pages
 st.set_page_config(page_title = "Kristal Retriever", page_icon = "📖", layout = "wide")
 st.header("📖 Kristal Retriever")
 
-# Hide particular pages if not logged in
-if not st.session_state.logged_in:
-    hide_pages(["Bulk Upload - Basic", "Bulk Upload - Advanced", "Q&A - Basic", "Q&A - Advanced"])
-
-# Hide particular pages if logged out
-if st.session_state.logged_out:
-    hide_pages(["Bulk Upload - Basic", "Bulk Upload - Advanced", "Q&A - Basic", "Q&A - Advanced"])
-
 import openai
 import os
 import tempfile
@@ -42,6 +34,11 @@ if not openai_api_key:
         "There is something wrong with the API Key Configuration."
         "Please check with creator of the program (OpenAI keys can be found at https://platform.openai.com/account/api-keys)"
     )
+
+def change_states():
+    st.session_state.logged_out = True
+    st.session_state.logged_in = False
+    st.session_state.password_match = None
 
 # Initializing session states
 if "load_prompt_result_selector_state" not in st.session_state:
@@ -74,14 +71,9 @@ if st.session_state.logged_in is True and st.session_state.logout is False:
 
     st.sidebar.subheader(f'Welcome {st.session_state.username}')
 
-    logout_button = st.session_state.Authenticator.logout('Log Out', 'sidebar')
-
-    # If user has clicked logged_out button, update the state variables
-    if logout_button:
-        st.session_state.logged_out = True
-        st.session_state.logged_in = False
-        st.rerun()
-
+    #st.session_state.Authenticator.logout('Log Out', 'sidebar')
+    # logout_button = st.session_state.Authenticator.logout('Log Out', 'sidebar')
+    logout_button = st.sidebar.button("Logout", on_click = change_states)
 
     # Check embeddings
     check_embeddings = st.radio(label = "Do you have saved embeddings?", options = ["Yes", "No"], index = None, help = "Embeddings are saved files created by ChromaDB", disabled=False, horizontal = False, label_visibility="visible")
