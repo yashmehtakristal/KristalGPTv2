@@ -146,7 +146,7 @@ try:
         st.session_state.logout = False
 
         st.sidebar.subheader(f'Welcome {st.session_state.username}')
-        logout_button = st.sidebar.button("Logout", on_click = change_states)
+        # logout_button = st.sidebar.button("Logout", on_click = change_states)
 
 except Exception as e:
     st.error(f'An error occurred: {e}')
