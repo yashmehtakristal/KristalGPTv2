@@ -17,21 +17,19 @@ if st.session_state.logged_out:
 # Add the logo to the sidebar
 add_logo("https://assets-global.website-files.com/614a9edd8139f5def3897a73/61960dbb839ce5fefe853138_Kristal%20Logotype%20Primary.svg")
 
+def change_states():
+    st.session_state.logged_out = True
+    st.session_state.logged_in = False
+
 
 # let User see app if logged in = True & logged out = False
-if st.session_state.logged_in is True and st.session_state.logged_out is False:
+if st.session_state.logged_in is True and st.session_state.logout is False:
 
     st.sidebar.subheader(f'Welcome {st.session_state.username}')
 
     #st.session_state.Authenticator.logout('Log Out', 'sidebar')
-    logout_button = st.session_state.Authenticator.logout('Log Out', 'sidebar')
-
-    # If user has clicked logged_out button, update the state variables
-    if logout_button:
-        st.session_state.logged_out = True
-        st.session_state.logged_in = False
-        st.rerun()
-
+    # logout_button = st.session_state.Authenticator.logout('Log Out', 'sidebar')
+    logout_button = st.sidebar.button("Logout", on_click = change_states)
 
     # Display Markdown of the main page
     st.markdown(
