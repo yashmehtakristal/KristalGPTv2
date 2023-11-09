@@ -37,12 +37,6 @@ if "logged_out" not in st.session_state:
 if "logged_in" not in st.session_state:
     st.session_state['logged_in'] = False
 
-if not st.session_state.logged_in:
-    hide_pages(["About", "Bulk Upload - Basic", "Bulk Upload - Advanced", "Q&A - Basic", "Q&A - Advanced"])
-
-if st.session_state.logged_out:
-    hide_pages(["About", "Bulk Upload - Basic", "Bulk Upload - Advanced", "Q&A - Basic", "Q&A - Advanced"])
-
 if "Authenticator" not in st.session_state:
     st.session_state['Authenticator'] = None
 
@@ -57,11 +51,6 @@ if "password" not in st.session_state:
 
 if "password_match" not in st.session_state:
     st.session_state['password_match'] = ""    
-
-if 'run_logout_button' in st.session_state and st.session_state.run_logout_button == True:
-    st.session_state.running = True
-else:
-    st.session_state.running = False
 
 
 def change_states():
@@ -157,10 +146,7 @@ try:
         st.session_state.logout = False
 
         st.sidebar.subheader(f'Welcome {st.session_state.username}')
-
-        if st.sidebar.button("Logout", disabled = st.session_state.running, on_click = change_states, key='run_logout_button'):
-            st.rerun()
-
+        # logout_button = st.sidebar.button("Logout", on_click = change_states)
 
 except Exception as e:
     st.error(f'An error occurred: {e}')
