@@ -44,7 +44,7 @@ if st.session_state.logged_out:
     hide_pages(["About", "Bulk Upload - Basic", "Bulk Upload - Advanced", "Q&A - Basic", "Q&A - Advanced"])
 
 if "username" not in st.session_state:
-    st.session_state['username'] = None
+    st.session_state['username'] = ''
 
 if "Authenticator" not in st.session_state:
     st.session_state['Authenticator'] = None
@@ -57,18 +57,18 @@ def login_button_pressed():
     
     info, info1 = st.columns(2)
     
-    if st.session_state['username']:
-        if st.session_state['username'] in usernames:
+    if username:
+        if username in usernames:
             if password:
 
-                # st.session_state.username = username
-                password_match = bcrypt.checkpw(password.encode(), credentials['usernames'][st.session_state['username']]['password'].encode())
+                st.session_state.username = username
+                password_match = bcrypt.checkpw(password.encode(), credentials['usernames'][username]['password'].encode())
 
                 if password_match is True:
                     st.session_state.logged_in = True
                     st.session_state.logout = False
 
-                    st.sidebar.subheader('Welcome', st.session_state['username'])
+                    st.sidebar.subheader(f'Welcome {username}')
                     logout_button = Authenticator.logout('Log Out', 'sidebar')
 
                     if logout_button:
@@ -129,8 +129,6 @@ try:
                         '''
                         )
         
-        st.session_state['username'] = username
-        
         password = st.text_input('Password', placeholder='Enter Your Password', type='password',
                             help =
                             '''
@@ -140,8 +138,10 @@ try:
                             '''
                             )
         
-        login_button = st.form_submit_button('Login', on_click = login_button_pressed)
-            
+        btn1, bt2, btn3, btn4, btn5 = st.columns(5)
+
+        with btn1:
+            login_button = st.form_submit_button('Login', on_click = login_button_pressed)
 
 
 except Exception as e:
