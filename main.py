@@ -51,6 +51,9 @@ if "logout" not in st.session_state:
 
 # Function defining what happens if login button is pressed
 def login_button_pressed(username, password):
+
+    st.write(username)
+    st.write(password)
     
     info, info1 = st.columns(2)
     
