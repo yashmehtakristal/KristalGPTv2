@@ -43,6 +43,12 @@ if not st.session_state.logged_in:
 if st.session_state.logged_out:
     hide_pages(["About", "Bulk Upload - Basic", "Bulk Upload - Advanced", "Q&A - Basic", "Q&A - Advanced"])
 
+if "username" not in st.session_state:
+    st.session_state['username'] = None
+
+if "password" not in st.session_state:
+    st.session_state['password'] = None
+
 if "Authenticator" not in st.session_state:
     st.session_state['Authenticator'] = None
 
@@ -54,25 +60,23 @@ def login_button_pressed():
     
     info, info1 = st.columns(2)
     
-    if username:
-        if username in usernames:
+    if st.session_state['username']:
+        if st.session_state['username'] in usernames:
             if password:
 
-                st.session_state.username = username
-                password_match = bcrypt.checkpw(password.encode(), credentials['usernames'][username]['password'].encode())
+                # st.session_state.username = username
+                password_match = bcrypt.checkpw(st.session_state['password'].encode(), credentials['usernames'][st.session_state['username']]['password'].encode())
 
                 if password_match is True:
                     st.session_state.logged_in = True
                     st.session_state.logout = False
 
-                    st.sidebar.subheader(f'Welcome {username}')
+                    st.sidebar.subheader('Welcome', st.session_state['username'])
                     logout_button = Authenticator.logout('Log Out', 'sidebar')
 
                     if logout_button:
                         st.session_state.logged_out = True
                         st.session_state.logged_in = False
-
-                    st.rerun()
 
                 elif password_match is False:
                     with info:
@@ -125,8 +129,11 @@ try:
                         Please make sure:
                         1) Username is at least 2 characters long
                         2) Username contains only alphanumeric characters (letters and digits)
-                        '''
+                        ''',
+                        key = "username"
                         )
+        
+        st.session_state['username'] = username
         
         password = st.text_input('Password', placeholder='Enter Your Password', type='password',
                             help =
@@ -134,14 +141,14 @@ try:
                             Please make sure:
                             1) Length of password is at least 6 characters long
                             2) Password can contain any characters (letters, digits, underscore, dashes, period etc)
-                            '''
+                            ''',
+                            key = "password"
                             )
         
         btn1, bt2, btn3, btn4, btn5 = st.columns(5)
 
         with btn1:
-            #login_button = st.form_submit_button('Login', on_click= login_button_pressed, args = (username, password))
-            login_button = st.form_submit_button('Login', on_click= login_button_pressed)
+            login_button = st.form_submit_button('Login', on_click = login_button_pressed)
 
 
 except Exception as e:
