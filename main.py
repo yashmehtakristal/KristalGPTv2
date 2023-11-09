@@ -43,9 +43,6 @@ if not st.session_state.logged_in:
 if st.session_state.logged_out:
     hide_pages(["About", "Bulk Upload - Basic", "Bulk Upload - Advanced", "Q&A - Basic", "Q&A - Advanced"])
 
-if "username" not in st.session_state:
-    st.session_state['username'] = ''
-
 if "Authenticator" not in st.session_state:
     st.session_state['Authenticator'] = None
 
