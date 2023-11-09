@@ -6,14 +6,6 @@ from st_pages import Page, Section, add_page_title, show_pages, hide_pages
 st.set_page_config(page_title = "Kristal Retriever", page_icon = "📖", layout = "wide", initial_sidebar_state = "expanded")
 st.header("📖 Kristal Retriever")
 
-# Hide particular pages if not logged in
-if not st.session_state.logged_in:
-    hide_pages(["Bulk Upload - Basic", "Bulk Upload - Advanced", "Q&A - Basic", "Q&A - Advanced"])
-
-# Hide particular pages if logged out
-if st.session_state.logged_out:
-    hide_pages(["Bulk Upload - Basic", "Bulk Upload - Advanced", "Q&A - Basic", "Q&A - Advanced"])
-
 # Add the logo to the sidebar
 add_logo("https://assets-global.website-files.com/614a9edd8139f5def3897a73/61960dbb839ce5fefe853138_Kristal%20Logotype%20Primary.svg")
 
