@@ -146,6 +146,7 @@ try:
         st.session_state.logout = False
 
         st.sidebar.subheader(f'Welcome {st.session_state.username}')
+        st.success("You have succesfully logged in", icon = "🎉")
         # logout_button = st.sidebar.button("Logout", on_click = change_states)
 
 except Exception as e:
