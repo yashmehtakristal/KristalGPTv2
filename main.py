@@ -19,6 +19,11 @@ import bcrypt
 # Add the logo to the sidebar
 add_logo("https://assets-global.website-files.com/614a9edd8139f5def3897a73/61960dbb839ce5fefe853138_Kristal%20Logotype%20Primary.svg")
 
+import openai
+OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
+openai.api_key = OPENAI_API_KEY
+openai_api_key = OPENAI_API_KEY
+
 show_pages(
     [
         Page("main.py","Login", "🗝️"),
