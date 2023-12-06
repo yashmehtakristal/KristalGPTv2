@@ -14,6 +14,9 @@ OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
 openai.api_key = OPENAI_API_KEY
 openai_api_key = OPENAI_API_KEY
 
+if 'username' in st.session_state:
+    st.session_state.username = st.session_state.username
+
 def change_states():
     st.session_state.logged_out = True
     st.session_state.logged_in = False
